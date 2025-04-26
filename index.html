@@ -16,78 +16,78 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Miiverse Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Miiverse Clone - Registro / Login</title>
+  <script type="module" src="./firebase.js"></script>
+  <script type="module" src="./auth.js"></script>
 </head>
 <body>
 
-  <h1>Bienvenido a Miiverse Clon</h1>
+  <h1>Miiverse Clone - Registro y Login</h1>
 
-  <h2>Registrarse</h2>
+  <!-- Registro -->
+  <h2>Crear cuenta</h2>
   <form id="register-form">
     <input type="email" id="register-email" placeholder="Correo electrónico" required><br>
     <input type="password" id="register-password" placeholder="Contraseña" required><br>
     <button type="submit">Registrarse</button>
   </form>
 
-  <h2>Iniciar Sesión</h2>
+  <!-- Login -->
+  <h2>Iniciar sesión</h2>
   <form id="login-form">
     <input type="email" id="login-email" placeholder="Correo electrónico" required><br>
     <input type="password" id="login-password" placeholder="Contraseña" required><br>
-    <button type="submit">Iniciar Sesión</button>
+    <button type="submit">Iniciar sesión</button>
   </form>
 
-  <button id="logout-button">Cerrar Sesión</button>
-
   <script type="module">
-    import { registerUser, loginUser, logoutUser } from './auth.js';
+    import { registerUser, loginUser } from './auth.js';
 
     // Registro
     const registerForm = document.getElementById('register-form');
     registerForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+      e.preventDefault(); // Evitar recargar la página
+
       const email = document.getElementById('register-email').value;
       const password = document.getElementById('register-password').value;
+
       try {
-        await registerUser(email, password);
-        alert('¡Registro exitoso!');
-        window.location.href = 'main_menu.html'; // Tu menú principal de Miiverse
+        const user = await registerUser(email, password);
+        console.log('Usuario registrado:', user.uid);
+        alert('¡Registro exitoso! Ahora inicia sesión.');
+        // Después de registrarse, podrías redirigir o dejarlo aquí
       } catch (error) {
-        alert('Error en registro: ' + error.message);
+        console.error('Error al registrarse:', error.message);
+        alert('Error al registrarse: ' + error.message);
       }
     });
 
-    // Inicio de sesión
+    // Login
     const loginForm = document.getElementById('login-form');
     loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+      e.preventDefault(); // Evitar recargar la página
+
       const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
-      try {
-        await loginUser(email, password);
-        alert('¡Inicio de sesión exitoso!');
-        window.location.href = 'main_menu.html'; // Tu menú principal de Miiverse
-      } catch (error) {
-        alert('Error en login: ' + error.message);
-      }
-    });
 
-    // Cerrar sesión
-    const logoutButton = document.getElementById('logout-button');
-    logoutButton.addEventListener('click', async () => {
       try {
-        await logoutUser();
-        alert('Sesión cerrada.');
+        const user = await loginUser(email, password);
+        console.log('Usuario logueado:', user.uid);
+        alert('¡Inicio de sesión exitoso!');
+        window.location.href = "https://yosmakii99.github.io/miiverse_project/";
       } catch (error) {
-        alert('Error al cerrar sesión: ' + error.message);
+        console.error('Error al iniciar sesión:', error.message);
+        alert('Error al iniciar sesión: ' + error.message);
       }
     });
   </script>
-<h2>Registrarse</h2>
+<!-- Registro -->
+<h2>Crear cuenta</h2>
 <form id="register-form">
+  <input type="text" id="register-nnid" placeholder="Nombre NNID" required><br> <!-- NUEVO -->
   <input type="email" id="register-email" placeholder="Correo electrónico" required><br>
   <input type="password" id="register-password" placeholder="Contraseña" required><br>
-  <input type="text" id="register-username" placeholder="Nombre de usuario (NNID)" required><br>
-  <input type="url" id="register-mii" placeholder="URL de tu Mii (opcional)"><br>
   <button type="submit">Registrarse</button>
 </form>
 </body>
