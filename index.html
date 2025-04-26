@@ -1,18 +1,5 @@
 <body style="background-image: url('background.png');"></body>
 <!DOCTYPE html>
-<html lang="en">
-<head> <head><meta charset="UTF-8"></head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="img/miiverse.png" type="image/x-icon">
-    <link rel="stylesheet" href="ccs/swiper-bundle.main.ccs">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
-<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -28,6 +15,7 @@
   <!-- Registro -->
   <h2>Crear cuenta</h2>
   <form id="register-form">
+    <input type="text" id="register-nnid" placeholder="Nombre de NNID" required><br> <!-- Campo de NNID -->
     <input type="email" id="register-email" placeholder="Correo electrónico" required><br>
     <input type="password" id="register-password" placeholder="Contraseña" required><br>
     <button type="submit">Registrarse</button>
@@ -47,16 +35,16 @@
     // Registro
     const registerForm = document.getElementById('register-form');
     registerForm.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Evitar recargar la página
+      e.preventDefault();
 
+      const nnid = document.getElementById('register-nnid').value;
       const email = document.getElementById('register-email').value;
       const password = document.getElementById('register-password').value;
 
       try {
-        const user = await registerUser(email, password);
+        const user = await registerUser(email, password, nnid);
         console.log('Usuario registrado:', user.uid);
         alert('¡Registro exitoso! Ahora inicia sesión.');
-        // Después de registrarse, podrías redirigir o dejarlo aquí
       } catch (error) {
         console.error('Error al registrarse:', error.message);
         alert('Error al registrarse: ' + error.message);
@@ -66,7 +54,7 @@
     // Login
     const loginForm = document.getElementById('login-form');
     loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Evitar recargar la página
+      e.preventDefault();
 
       const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
@@ -82,13 +70,6 @@
       }
     });
   </script>
-<!-- Registro -->
-<h2>Crear cuenta</h2>
-<form id="register-form">
-  <input type="text" id="register-nnid" placeholder="Nombre NNID" required><br> <!-- NUEVO -->
-  <input type="email" id="register-email" placeholder="Correo electrónico" required><br>
-  <input type="password" id="register-password" placeholder="Contraseña" required><br>
-  <button type="submit">Registrarse</button>
-</form>
+
 </body>
 </html>

@@ -1,11 +1,9 @@
-// firebase.js
-
-
+// Firebase core
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-
+// Configuración de tu Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAMxF3fi7j_1q4tMuVVlmTNnpArpZksp-0",
   authDomain: "miiverse-project-b3a54.firebaseapp.com",
@@ -16,9 +14,7 @@ const firebaseConfig = {
   measurementId: "G-8P4GJEHXF8"
 };
 
-
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-
-
 export const auth = getAuth(app);
 export const db = getFirestore(app);

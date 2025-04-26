@@ -1,39 +1,23 @@
-// auth.js
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from './firebase.js';
+import { setDoc, doc } from "firebase/firestore";
 
-import { auth } from './firebase.js';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+// Registro
+export async function registerUser(email, password, nnid) {
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const user = userCredential.user;
 
-// Función para registrar usuario
-export const registerUser = async (email, password) => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    console.log("Usuario registrado:", userCredential.user);
-    return userCredential.user;
-  } catch (error) {
-    console.error("Error al registrar usuario:", error.message);
-    throw error;
-  }
-};
+  // Guardar NNID en Firestore
+  await setDoc(doc(db, "users", user.uid), {
+    email: email,
+    nnid: nnid,
+  });
 
-// Función para iniciar sesión
-export const loginUser = async (email, password) => {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log("Usuario logueado:", userCredential.user);
-    return userCredential.user;
-  } catch (error) {
-    console.error("Error al iniciar sesión:", error.message);
-    throw error;
-  }
-};
+  return user;
+}
 
-// Función para cerrar sesión
-export const logoutUser = async () => {
-  try {
-    await signOut(auth);
-    console.log("Usuario cerró sesión");
-  } catch (error) {
-    console.error("Error al cerrar sesión:", error.message);
-    throw error;
-  }
-};
+// Login
+export async function loginUser(email, password) {
+  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  return userCredential.user;
+}
