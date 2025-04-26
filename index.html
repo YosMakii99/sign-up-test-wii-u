@@ -1,75 +1,19 @@
-<body style="background-image: url('background.png');"></body>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Miiverse Clone - Registro / Login</title>
-  <script type="module" src="./firebase.js"></script>
-  <script type="module" src="./auth.js"></script>
+  <title>Prueba Redirección Forzada</title>
 </head>
 <body>
 
-  <h1>Miiverse Clone - Registro y Login</h1>
+<h1>Prueba de Redirección Forzada</h1>
+<button id="redirigir">Ir a Miiverse Project</button>
 
-  <!-- Registro -->
-  <h2>Crear cuenta</h2>
-  <form id="register-form">
-    <input type="text" id="register-nnid" placeholder="Nombre de NNID" required><br> <!-- Campo de NNID -->
-    <input type="email" id="register-email" placeholder="Correo electrónico" required><br>
-    <input type="password" id="register-password" placeholder="Contraseña" required><br>
-    <button type="submit">Registrarse</button>
-  </form>
-
-  <!-- Login -->
-  <h2>Iniciar sesión</h2>
-  <form id="login-form">
-    <input type="email" id="login-email" placeholder="Correo electrónico" required><br>
-    <input type="password" id="login-password" placeholder="Contraseña" required><br>
-    <button type="submit">Iniciar sesión</button>
-  </form>
-
-  <script type="module">
-    import { registerUser, loginUser } from './auth.js';
-
-    // Registro
-    const registerForm = document.getElementById('register-form');
-    registerForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const nnid = document.getElementById('register-nnid').value;
-      const email = document.getElementById('register-email').value;
-      const password = document.getElementById('register-password').value;
-
-      try {
-        const user = await registerUser(email, password, nnid);
-        console.log('Usuario registrado:', user.uid);
-        alert('¡Registro exitoso! Ahora inicia sesión.');
-      } catch (error) {
-        console.error('Error al registrarse:', error.message);
-        alert('Error al registrarse: ' + error.message);
-      }
-    });
-
-    // Login
-    const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-
-      try {
-        const user = await loginUser(email, password);
-        console.log('Usuario logueado:', user.uid);
-        alert('¡Inicio de sesión exitoso!');
-        window.location.href = "https://yosmakii99.github.io/miiverse_project/";
-      } catch (error) {
-        console.error('Error al iniciar sesión:', error.message);
-        alert('Error al iniciar sesión: ' + error.message);
-      }
-    });
-  </script>
+<script>
+document.getElementById('redirigir').addEventListener('click', () => {
+  location.replace("https://yosmakii99.github.io/miiverse_project/");
+});
+</script>
 
 </body>
 </html>
